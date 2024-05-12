@@ -1,21 +1,26 @@
 import { useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import Form from './components/form/Form'
+import Header from './components/header/Header'
+import ProductList from './components/product-list/ProductList'
+import { useTelegram } from './hooks/useTelegram'
+
 import './App.css'
 
-const tg = window.Telegram.WebApp
-
 function App() {
+	const { tg } = useTelegram()
+
 	useEffect(() => {
 		tg.ready()
 	}, [])
 
-	const onClose = () => {
-		tg.close()
-	}
-
 	return (
 		<div className='App'>
-			Work
-			<button onClick={onClose}>Закрыть</button>
+			<Header />
+			<Routes>
+				<Route index element={<ProductList />} />
+				<Route path={'form'} element={<Form />} />
+			</Routes>
 		</div>
 	)
 }
